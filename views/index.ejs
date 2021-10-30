@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+    crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+</head>
+
+<body>
+  <%if(success!=''){%>
+  <div class="alert alert-success"> 
+   <strong>Success! </strong><%=success%>  
+  </div><%}%>
+  <div style="text-align: right;"><button class="btn btn-danger"><a href="/logout" style="text-decoration:none; color:white;">Logout</a></button></div>
+  <div class="container col-md-12">
+    <h3 class="row">Fliter Employee Records</h3>
+    <form action="/search/" method="post" class="formhorizontal">
+      <div class="col-md-12">
+        <table>
+          <th class="control-label col-md-4">By Name</th>
+          <th class="control-label col-md-4">By Email</th>
+          <th class="control-label col-md-4">By Employee Type</th>
+          <tr>
+            <td><input type="text" name="ename" placeholder=" Enter Name" class="form-control col-md-3"></td>
+            <td><input type="email" name="email" placeholder=" Enter Email" class="form-control col-md-3"></td>
+            <td>
+              <select name="etype" class="form-control col-md-3">
+                <option value="Hourly">Hourly</option>
+                <option value="Fixed">Fixed</option>
+              </select>
+            </td>
+            <td><input type="submit" name="submit" class="form-control btn btn-primary col-md-3"></td>
+          </tr>
+        </table>
+      </div>
+    </form>
+    
+  </div>
+
+  <h1>
+    <%= title %>
+  </h1>
+  <table class="table table-striped ">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Emp Type</th>
+    <th>Hourly Rate</th>
+    <th>Total Hours</th>
+    <th>Total Amount</th>
+    <th>Update</th>
+    <th>Delete</th>
+    <%if(records.length>0){%>
+      <% records.forEach(function(emp){%>
+        <tr>
+          <td>
+            <%=emp.name%>
+          </td>
+          <td>
+            <%=emp.email%>
+          </td>
+          <td>
+            <%=emp.etype %>
+          </td>
+          <td>
+            <%=emp.hourlyrate%>
+          </td>
+          <td>
+            <%=emp.totalhours%>
+          </td>
+          <td>
+            <%=emp.total %>
+          </td>
+          <td><a href="/edi/<%=emp._id%>"><button class="btn btn-primary">Update</button></i></a></td>
+          <td><a href="/deli/<%=emp._id%>"><button class="btn btn-danger">Delete</button></i></a></td>
+        </tr>
+        <%})} else{%>
+          <tr>
+            <td colspan="6">No Record Found</td>
+          </tr>
+          <%}%>
+  </table>
+
+  <div class="container col-md-7" style="margin-top: 50px;">
+    <div class="row" style="border: solid rgb(81, 118, 238); padding-bottom: 40px;">
+      <h4 style="color: white; background-color: rgb(81, 118, 238); padding-top: 10px; padding-bottom: 10px;">Employee
+        Details Form</h4>
+      <form action="/" method="post" class="form-horizontal">
+        <br>
+        Employee Name :
+        <input type="text" name="ename" id="ename" class="form-control col-md-9" placeholder="Enter Name" required>
+        Email :
+        <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" required>
+        Employee Type :
+        <select name="etype" id="etype" class="form-control">
+          <option value="Hourly">Hourly</option>
+          <option value="Fixed">Fixed</option>
+        </select>
+        Hourlyrate :
+        <input type="number" name="hourlyrate" id="hourlyrate" class="form-control" placeholder= "Enter Rate Per Hour" required>
+        Totalhours :
+        <input type="number" name="totalhours" id="totalhours" class="form-control" placeholder="Enter Total Hours">
+        <br>
+        <input type="submit" value="submit" class="col-md-3 form-control btn btn-primary">
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
